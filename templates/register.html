@@ -41,9 +41,6 @@
                         class="form-control{% if formulario.password1.errors %} is-invalid{% endif %}"
                         value="{% if formulario.password1.value %}{{ formulario.password1.value }}{% endif %}"
                         aria-describedby="basic-addon1">
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon1"><a href="#"><i class="fas fa-eye-slash" id="basic-addon1"></i></a></span>
-                    </div>
                     {% for err in formulario.password1.errors %}
                         <span class="invalid-feedback">{{ err }}</span>
                     {% endfor %}
@@ -66,9 +63,6 @@
                         class="form-control{% if formulario.password2.errors %} is-invalid{% endif %}"
                         value="{% if formulario.password2.value %}{{ formulario.password2.value }}{% endif %}"
                         aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon2"><a href="#"><i class="fas fa-eye-slash"></i></a></span>
-                    </div>
                     {% for err in formulario.password2.errors %}
                         <div class="invalid-feedback">{{ err }}</div>
                     {% endfor %}
