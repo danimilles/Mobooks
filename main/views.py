@@ -1,10 +1,9 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as log_out, login as log_in, authenticate
+import pymongo
 
 
-# Create your views here.
 def index(request):
     return render(request, 'index.html', {})
 
@@ -19,7 +18,7 @@ def register(request):
                 log_in(request, user)
                 return redirect('/')
 
-    return render(request, 'register.html', {'formulario': form})
+    return render(request, 'register.html', {'userform': form})
 
 
 def login(request):
@@ -32,8 +31,10 @@ def login(request):
                 log_in(request, user)
                 return redirect('/')
 
-    return render(request, 'login.html', {'formulario': form})
+    return render(request, 'login.html', {'userform': form})
+
 
 def logout(request):
     log_out(request)
     return redirect('/')
+

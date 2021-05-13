@@ -6,24 +6,24 @@
 {% block contenido %}
 
     <div>
-        <form class="" id="formulario" method="post" action=''>{% csrf_token %}
-            <form id="formulario" method="post" action=''>{% csrf_token %}
+        <form class="" id="userform" method="post" action=''>{% csrf_token %}
+            <form id="userform" method="post" action=''>{% csrf_token %}
 
             <div class="form-group">
-                <label for="{{ formulario.username.id_for_label }}">
+                <label for="{{ userform.username.id_for_label }}">
                     Nombre de usuario:
                 </label>
-                <input type="text" id="{{ formulario.username.id_for_label }}"
-                        name="{{ formulario.username.html_name }}"
-                        {% if formulario.username.field.required %}required{% endif %}
-                        class="form-control{% if formulario.username.errors %} is-invalid{% endif %}"
-                        value="{% if formulario.username.value %}{{ formulario.username.value }}{% endif %}">
-                {% for err in formulario.username.errors %}
+                <input type="text" id="{{ userform.username.id_for_label }}"
+                        name="{{ userform.username.html_name }}"
+                        {% if userform.username.field.required %}required{% endif %}
+                        class="form-control{% if userform.username.errors %} is-invalid{% endif %}"
+                        value="{% if userform.username.value %}{{ userform.username.value }}{% endif %}">
+                {% for err in userform.username.errors %}
                     <span class="invalid-feedback">{{ err }}</span>
                 {% endfor %}
-                {% if formulario.username.help_text %}
+                {% if userform.username.help_text %}
                 <small class="text-muted">
-                    {{ formulario.username.help_text }}
+                    {{ userform.username.help_text }}
                 </small>
                 {% endif %}
 
@@ -31,49 +31,49 @@
 
 
             <div class="form-group">
-                <label for="{{ formulario.password1.id_for_label }}">
+                <label for="{{ userform.password1.id_for_label }}">
                         Contraseña:
                 </label>
                 <div class="input-group" id="show_hide_password1">
-                    <input type="password" id="{{ formulario.password1.id_for_label }}"
-                        name="{{ formulario.password1.html_name }}"
-                        {% if formulario.password1.field.required %}required{% endif %}
-                        class="form-control{% if formulario.password1.errors %} is-invalid{% endif %}"
-                        value="{% if formulario.password1.value %}{{ formulario.password1.value }}{% endif %}"
+                    <input type="password" id="{{ userform.password1.id_for_label }}"
+                        name="{{ userform.password1.html_name }}"
+                        {% if userform.password1.field.required %}required{% endif %}
+                        class="form-control{% if userform.password1.errors %} is-invalid{% endif %}"
+                        value="{% if userform.password1.value %}{{ userform.password1.value }}{% endif %}"
                         aria-describedby="basic-addon1">
-                    {% for err in formulario.password1.errors %}
+                    {% for err in userform.password1.errors %}
                         <span class="invalid-feedback">{{ err }}</span>
                     {% endfor %}
                 </div>
-                {% if formulario.password1.help_text %}
+                {% if userform.password1.help_text %}
                 <small class="text-muted">
-                    {{ formulario.password1.help_text }}
+                    {{ userform.password1.help_text }}
                 </small>
                 {% endif %}
             </div>
 
             <div class="form-group">
-                <label for="{{ formulario.password2.id_for_label }}">
+                <label for="{{ userform.password2.id_for_label }}">
                         Confirmar contraseña:
                 </label>
                 <div class="input-group" id="show_hide_password2">
-                    <input type="password" id="{{ formulario.password2.id_for_label }}"
-                        name="{{ formulario.password2.html_name }}"
-                        {% if formulario.password2.field.required %}required{% endif %}
-                        class="form-control{% if formulario.password2.errors %} is-invalid{% endif %}"
-                        value="{% if formulario.password2.value %}{{ formulario.password2.value }}{% endif %}"
+                    <input type="password" id="{{ userform.password2.id_for_label }}"
+                        name="{{ userform.password2.html_name }}"
+                        {% if userform.password2.field.required %}required{% endif %}
+                        class="form-control{% if userform.password2.errors %} is-invalid{% endif %}"
+                        value="{% if userform.password2.value %}{{ userform.password2.value }}{% endif %}"
                         aria-describedby="basic-addon2">
-                    {% for err in formulario.password2.errors %}
+                    {% for err in userform.password2.errors %}
                         <div class="invalid-feedback">{{ err }}</div>
                     {% endfor %}
                 </div>
-                {% if formulario.password2.help_text %}
+                {% if userform.password2.help_text %}
                 <small class="text-muted">
-                    {{ formulario.password2.help_text }}
+                    {{ userform.password2.help_text }}
                 </small>
                 {% endif %}
             </div>
-
+            <br>
             <button class="btn btn-dark mb-2" type='submit'>Registrarse</button>
         </form>
     </div>
