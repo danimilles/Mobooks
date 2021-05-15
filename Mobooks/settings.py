@@ -70,6 +70,8 @@ WSGI_APPLICATION = 'Mobooks.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DB_HOST = 'localhost'
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',

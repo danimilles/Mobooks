@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout as log_out, login as log_in, authenticate
 import pymongo
 
+from Mobooks.settings import DB_HOST
+
 
 def index(request):
     return render(request, 'index.html', {})
@@ -38,3 +40,13 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+
+def connect_to_db():
+    client = pymongo.MongoClient(DB_HOST, 27017)
+    mobooks_db = client['mobooks']
+    return mobooks_db
+
+
+def populate_database(request):
+    mobooks_db = connect_to_db
+    return render(request, 'index.html', {})

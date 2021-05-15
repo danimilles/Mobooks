@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
-{% block titulo %} Bienvenido/a {% endblock %}
+{% block title %} Bienvenido {% endblock %}
 
 
-{% block contenido %}
-
+{% block content %}
+    {% if user.is_authenticated %}
     <h2 style="text-align: center">¡Bienvenido/a al servicio de libros Mobooks!</h2>
+    <div class="container text-center ">
+        <a class="btn btn-primary" href="/populate">Reiniciar base de datos con datos de pruebas</a>
+    </div>
+    {% else %}
+        Por favor, inicie sesión para usar la aplicación.
+    {% endif %}
 
 {% endblock %}
