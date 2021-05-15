@@ -3,3 +3,6 @@ venv/*
 /.idea
 /venv
 /Mobooks/__pycache__/*
+db.sqlite3
+
+main/__pycache__/
