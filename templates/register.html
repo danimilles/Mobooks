@@ -5,76 +5,11 @@
 
 {% block contenido %}
 
-    <div>
-        <form class="" id="userform" method="post" action=''>{% csrf_token %}
-            <form id="userform" method="post" action=''>{% csrf_token %}
-
-            <div class="form-group">
-                <label for="{{ userform.username.id_for_label }}">
-                    Nombre de usuario:
-                </label>
-                <input type="text" id="{{ userform.username.id_for_label }}"
-                        name="{{ userform.username.html_name }}"
-                        {% if userform.username.field.required %}required{% endif %}
-                        class="form-control{% if userform.username.errors %} is-invalid{% endif %}"
-                        value="{% if userform.username.value %}{{ userform.username.value }}{% endif %}">
-                {% for err in userform.username.errors %}
-                    <span class="invalid-feedback">{{ err }}</span>
-                {% endfor %}
-                {% if userform.username.help_text %}
-                <small class="text-muted">
-                    {{ userform.username.help_text }}
-                </small>
-                {% endif %}
-
-            </div>
-
-
-            <div class="form-group">
-                <label for="{{ userform.password1.id_for_label }}">
-                        Contraseña:
-                </label>
-                <div class="input-group" id="show_hide_password1">
-                    <input type="password" id="{{ userform.password1.id_for_label }}"
-                        name="{{ userform.password1.html_name }}"
-                        {% if userform.password1.field.required %}required{% endif %}
-                        class="form-control{% if userform.password1.errors %} is-invalid{% endif %}"
-                        value="{% if userform.password1.value %}{{ userform.password1.value }}{% endif %}"
-                        aria-describedby="basic-addon1">
-                    {% for err in userform.password1.errors %}
-                        <span class="invalid-feedback">{{ err }}</span>
-                    {% endfor %}
-                </div>
-                {% if userform.password1.help_text %}
-                <small class="text-muted">
-                    {{ userform.password1.help_text }}
-                </small>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ userform.password2.id_for_label }}">
-                        Confirmar contraseña:
-                </label>
-                <div class="input-group" id="show_hide_password2">
-                    <input type="password" id="{{ userform.password2.id_for_label }}"
-                        name="{{ userform.password2.html_name }}"
-                        {% if userform.password2.field.required %}required{% endif %}
-                        class="form-control{% if userform.password2.errors %} is-invalid{% endif %}"
-                        value="{% if userform.password2.value %}{{ userform.password2.value }}{% endif %}"
-                        aria-describedby="basic-addon2">
-                    {% for err in userform.password2.errors %}
-                        <div class="invalid-feedback">{{ err }}</div>
-                    {% endfor %}
-                </div>
-                {% if userform.password2.help_text %}
-                <small class="text-muted">
-                    {{ userform.password2.help_text }}
-                </small>
-                {% endif %}
-            </div>
-            <br>
-            <button class="btn btn-dark mb-2" type='submit'>Registrarse</button>
-        </form>
-    </div>
+     <form method="POST">
+        <div class="form-group">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Entrar</button>
+        </div>
+    </form>
 {% endblock %}
