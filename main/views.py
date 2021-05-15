@@ -9,7 +9,7 @@ def index(request):
 
 
 def register(request):
-    form = ()
+    form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
@@ -18,7 +18,7 @@ def register(request):
                 log_in(request, user)
                 return redirect('/')
 
-    return render(request, 'register.html', {'userform': form})
+    return render(request, 'register.html', {'form': form})
 
 
 def login(request):
@@ -31,7 +31,7 @@ def login(request):
                 log_in(request, user)
                 return redirect('/')
 
-    return render(request, 'login.html', {'userform': form})
+    return render(request, 'login.html', {'form': form})
 
 
 def logout(request):
