@@ -112,7 +112,7 @@ def search(request):
                   {'form': form, 'books': Book.objects.all()})
 
 
-# Details
+# CRUD
 def details(request, id_book):
     book = Book.objects.get(pk=id_book)
     return render(request, 'details.html', {'book': book})
@@ -132,6 +132,7 @@ def create(request):
                                        publisher=form.cleaned_data['publisher'],
                                        synopsis=form.cleaned_data['synopsis'],
                                        available_quantity=form.cleaned_data['available_quantity'])
+            check_create_integrity(book)
             return redirect('/book/' + str(book.id))
 
     return render(request, 'form.html', {'form': form, 'title': 'Crear libro'})
@@ -154,4 +155,35 @@ def edit(request, id_book):
 def delete(request, id_book):
     book = Book.objects.get(pk=id_book)
     book.delete()
+    check_delete_integrity(book)
     return redirect('/book/search')
+
+
+def check_delete_integrity(initial_book):
+    author_exists = False
+    genre_exists = False
+    publisher_exists = False
+
+    for book in Book.objects.all():
+        author_exists = True if book.author == initial_book.author else False
+        genre_exists = True if book.genre == initial_book.genre else False
+        publisher_exists = True if book.publisher == initial_book.publisher else False
+
+        if author_exists and genre_exists and publisher_exists:
+            break
+
+    if not author_exists:
+        connect_to_db().main_author.remove({'name': initial_book.author})
+    if not genre_exists:
+        connect_to_db().main_genre.remove({'name': initial_book.genre})
+    if not publisher_exists:
+        connect_to_db().main_publisher.remove({'name': initial_book.publisher})
+
+
+def check_create_integrity(initial_book):
+    if connect_to_db().main_author.find({'name': initial_book.author}).count() == 0:
+        Author.objects.create(name=initial_book.author)
+    if connect_to_db().main_genre.find({'name': initial_book.genre}).count() == 0:
+        Genre.objects.create(name=initial_book.genre)
+    if connect_to_db().main_publisher.find({'name': initial_book.publisher}).count() == 0:
+        Publisher.objects.create(name=initial_book.publisher)
