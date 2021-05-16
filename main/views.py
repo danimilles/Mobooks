@@ -160,23 +160,11 @@ def delete(request, id_book):
 
 
 def check_delete_integrity(initial_book):
-    author_exists = False
-    genre_exists = False
-    publisher_exists = False
-
-    for book in Book.objects.all():
-        author_exists = True if book.author == initial_book.author else False
-        genre_exists = True if book.genre == initial_book.genre else False
-        publisher_exists = True if book.publisher == initial_book.publisher else False
-
-        if author_exists and genre_exists and publisher_exists:
-            break
-
-    if not author_exists:
+    if connect_to_db().main_book.find({'author': initial_book.author}).count() == 0:
         connect_to_db().main_author.remove({'name': initial_book.author})
-    if not genre_exists:
+    if connect_to_db().main_book.find({'genre': initial_book.genre}).count() == 0:
         connect_to_db().main_genre.remove({'name': initial_book.genre})
-    if not publisher_exists:
+    if connect_to_db().main_book.find({'publisher': initial_book.publisher}).count() == 0:
         connect_to_db().main_publisher.remove({'name': initial_book.publisher})
 
 
