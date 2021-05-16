@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Registro {% endblock %}
+{% block title %} {{ title }} {% endblock %}
 
 
 {% block content %}
@@ -9,7 +9,7 @@
         <div class="form-group">
             {{ form.as_p }}
             {% csrf_token %}
-            <button class="btn btn-primary" type="submit">Entrar</button>
+            <button class="btn btn-primary" type="submit">Enviar</button>
         </div>
     </form>
 {% endblock %}

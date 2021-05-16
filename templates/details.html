@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                  <h2 class="col-md-12">{{ book.title }}</h2>
+            </div>
+            <br>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <strong class="col-md-12">Autor:</strong><br>
+                <p class="col-md-12">{{ book.author }}</p>
+            </div>
+            <div class="row">
+                <strong class="col-md-12">Editorial:</strong><br>
+                <p class="col-md-12">{{ book.publisher }}</p>
+            </div>
+            <div class="row">
+                <strong class="col-md-12">Género:</strong><br>
+                <p class="col-md-12">
+                    {{ book.genre }}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <strong class="col-md-12">Año de publicación:</strong>
+                <p class="col-md-12">{{ book.release_year }}</p>
+            </div>
+            <div class="row">
+                <strong class="col-md-12">Cantidad disponible:</strong><br>
+                <p class="col-md-12">
+                    {{ book.available_quantity }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div>
+         <div class="row">
+            <h5>Sinopsis</h5>
+         </div>
+         <div class="row">
+             <p>{{ book.synopsis }}</p>
+         </div>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+        <div class="col-md-3 justify-content-center">
+            <a class="btn btn-primary" href="edit">Editar</a>
+        </div>
+        <div class="col-md-1 justify-content-center">
+            <a class="btn btn-danger" href="delete">Borrar</a>
+        </div>
+    </div>
+{% endblock %}

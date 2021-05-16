@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Busqueda
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="/book/create" >Añadir libro</a>
+        </div>
+    </div>
+    <hr>
+    <div>
+    <form method="POST">
+        <div class="form-group">
+            {{ form }}
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Buscar</button>
+        </div>
+    </form>
+    </div>
+    <hr>
+    <div class="list-group">
+        {% for book in books %}
+            <a class="list-group-item list-group-item-action" href="/book/{{ book.id }}">
+                <div class="row">
+                    <h6>Título: {{ book.title }}</h6>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {% if book.genre %}
+                            <div class="col">
+                                Género: {{ book.genre }}
+                            </div>
+                        {% endif %}
+                        {% if book.publisher %}
+                            <div class="col">
+                                Editorial: {{ book.publisher }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {% if book.author %}
+                            <div class="col">
+                                Autor: {{ book.author }}
+                            </div>
+                        {% endif %}
+                        <div class="col">
+                            Disponibles: {{ book.available_quantity }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+{% endblock %}

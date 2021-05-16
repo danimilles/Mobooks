@@ -24,5 +24,10 @@ urlpatterns = [
     path('login/', views.login),
     path('logout/', views.logout),
     path('register/', views.register),
-    path('populate/', views.populate_database)
+    path('populate/', views.populate_database),
+    path('book/<int:id_book>/', views.details),
+    path('book/<int:id_book>/edit', views.edit),
+    path('book/<int:id_book>/delete', views.delete),
+    path('book/create/', views.create),
+    path('book/search/', views.search)
 ]
