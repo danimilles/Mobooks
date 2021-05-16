@@ -140,6 +140,13 @@ def create(request):
 
 def edit(request, id_book):
     book = Book.objects.get(pk=id_book)
+    book_copy = Book(title=book.title,
+                     release_year=book.release_year,
+                     author=book.author,
+                     genre=book.genre,
+                     publisher=book.publisher,
+                     synopsis=book.synopsis,
+                     available_quantity=book.available_quantity)
     form = BookForm(instance=book)
 
     if request.method == 'POST':
@@ -147,6 +154,8 @@ def edit(request, id_book):
 
         if form.is_valid():
             form.save()
+            check_delete_integrity(book_copy)
+            check_create_integrity(book)
             return redirect('/book/' + str(book.id))
 
     return render(request, 'form.html', {'form': form, 'title': 'Editar libro'})
