@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -25,12 +26,14 @@ class Publisher(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=250, verbose_name='Título', null=False)
-    release_year = models.IntegerField(verbose_name='Año de publicación', null=True)
+    release_year = models.IntegerField(default=2020, validators=[MaxValueValidator(2021)],
+                                       verbose_name='Año de publicación', null=True)
     author = models.CharField(max_length=250, verbose_name='Autor', null=True)
     genre = models.CharField(max_length=250, verbose_name='Géneros', null=True)
     publisher = models.CharField(max_length=250, verbose_name='Editorial', null=True)
-    synopsis = models.TextField(verbose_name='Sinopsis', null=False)
-    available_quantity = models.IntegerField(verbose_name='Cantidad disponible', null=False)
+    synopsis = models.TextField(max_length=2500, verbose_name='Sinopsis', null=False)
+    available_quantity = models.IntegerField(default=0, validators=[MinValueValidator(0)],
+                                             verbose_name='Cantidad disponible', null=False)
 
     def __str__(self):
         return self.title

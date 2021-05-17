@@ -93,7 +93,6 @@ def populate_database(request):
         for datum in data:
             publisher = Publisher(name=datum['publisher'])
             Publisher.save(publisher)
-
     return redirect('/')
 
 
