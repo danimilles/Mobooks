@@ -99,22 +99,22 @@ def populate_database(request):
 # Searchs
 def search(request):
     form = SearchForm()
-    books = None
-
+    mobooks_db = connect_to_db()
     if request.method == 'POST':
         form = SearchForm(request.POST)
-
         if form.is_valid():
             genre = form.cleaned_data.get('genre')
+            return render(request, 'search.html',
+                          {'form': form, 'books': mobooks_db.main_book.find({"genre": str(genre)})})
 
     return render(request, 'search.html',
-                  {'form': form, 'books': Book.objects.all()})
+                  {'form': form, 'books': mobooks_db.main_book.find()})
 
 
 # CRUD
 def details(request, id_book):
-    book = Book.objects.get(pk=id_book)
-    return render(request, 'details.html', {'book': book})
+    mobooks_db = connect_to_db()
+    return render(request, 'details.html', {'book': mobooks_db.main_book.find({"id": id_book}).next()})
 
 
 def create(request):
