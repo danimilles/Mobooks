@@ -17,9 +17,13 @@ class SearchForm(OrderField):
     match = forms.BooleanField(label='Coincidir totalmente', required=False)
     from_date = forms.IntegerField(label='Desde año de publicación', required=False)
     to_date = forms.IntegerField(label='Hasta año de publicación', required=False)
-    genre = forms.ModelChoiceField(queryset=Genre.objects.all().exclude(name=None).order_by('name'), label='Género', required=False)
-    publisher = forms.ModelChoiceField(queryset=Publisher.objects.all().exclude(name=None).order_by('name'), label='Editorial', required=False)
-    author = forms.ModelChoiceField(queryset=Author.objects.all().exclude(name=None).order_by('name'), label='Autor', required=False)
+    genre = forms.ModelChoiceField(queryset=Genre.objects.all().exclude(name=None).order_by('name'), label='Género',
+                                   required=False)
+    publisher = forms.ModelChoiceField(queryset=Publisher.objects.all().exclude(name=None).order_by('name'),
+                                       label='Editorial', required=False)
+    author = forms.ModelChoiceField(queryset=Author.objects.all().exclude(name=None).order_by('name'), label='Autor',
+                                    required=False)
+
 
 class BookForm(forms.ModelForm):
     class Meta:

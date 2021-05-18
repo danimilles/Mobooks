@@ -149,6 +149,7 @@ def search(request):
     return render(request, 'search.html',
                   {'form': form, 'books': mobooks_db.main_book.find().sort("title", 1).limit(10)})
 
+
 # Statistics
 def statistics(request):
     mobooks_db = connect_to_db()
