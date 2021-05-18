@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-xj63-t8)i4a5g@@v!k#w+4o(k4y5=v-&l_b49k8j5*0j!04xb^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mobooks.herokuapp.com']
 
 # Application definition
 
@@ -126,6 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
