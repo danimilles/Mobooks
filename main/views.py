@@ -46,7 +46,7 @@ def logout(request):
     return redirect('/')
 
 
-# Pupulation
+# Population
 def connect_to_db():
     client = pymongo.MongoClient(DB_HOST, 27017)
     mobooks_db = client['mobooks']
@@ -67,7 +67,7 @@ def populate_database(request):
                         genre=datum['genre'],
                         publisher=datum['publisher'],
                         synopsis=datum['synopsis'],
-                        available_quantity=0)
+                        available_quantity=datum['available_quantity'])
             Book.save(book)
 
     authors_collection = mobooks_db['main_author']
@@ -96,19 +96,75 @@ def populate_database(request):
     return redirect('/')
 
 
-# Searchs
+# Search
 def search(request):
     form = SearchForm()
     mobooks_db = connect_to_db()
+
     if request.method == 'POST':
         form = SearchForm(request.POST)
+
         if form.is_valid():
+            page = form.cleaned_data.get('page')
+            to_show = form.cleaned_data.get('to_show')
+            to_skip = (page - 1) * to_show
+
+            order_type = form.cleaned_data.get('order_type')
+            reverse = form.cleaned_data.get('reverse')
+            asc_or_desc = 1 if reverse is False else -1
+
+            query = {}
+            title = form.cleaned_data.get('title')
+            match = form.cleaned_data.get('match')
+            if title:
+                query['title'] = {"$regex": "(.*)" + title + "(.*)"} if not match else title
+
+            from_date = form.cleaned_data.get('from_date')
+            to_date = form.cleaned_data.get('to_date')
+            if from_date or to_date:
+                date_compare = {}
+                if from_date:
+                    date_compare["$gte"] = from_date
+                if to_date:
+                    date_compare["$lte"] = to_date
+
+                query['release_year'] = date_compare
+
             genre = form.cleaned_data.get('genre')
+            if genre:
+                query['genre'] = str(genre)
+
+            publisher = form.cleaned_data.get('publisher')
+            if publisher:
+                query['publisher'] = str(publisher)
+
+            author = form.cleaned_data.get('author')
+            if author:
+                query['author'] = str(author)
+
+            books = mobooks_db.main_book.find(query).sort(order_type, asc_or_desc).skip(to_skip).limit(to_show)
             return render(request, 'search.html',
-                          {'form': form, 'books': mobooks_db.main_book.find({"genre": str(genre)})})
+                          {'form': form, 'books': books})
 
     return render(request, 'search.html',
-                  {'form': form, 'books': mobooks_db.main_book.find()})
+                  {'form': form, 'books': mobooks_db.main_book.find().sort("title", 1).limit(10)})
+
+# Statistics
+def statistics(request):
+    mobooks_db = connect_to_db()
+
+    available_books_num = 0
+    for book in mobooks_db.main_book.find():
+        available_books_num += book["available_quantity"]
+
+    return render(request, 'statistics.html',
+                  {'statistics':
+                       {"books_num": mobooks_db.main_book.find().count(),
+                        "genres_num": mobooks_db.main_genre.find().count(),
+                        "authors_num": mobooks_db.main_author.find().count(),
+                        "publishers_num": mobooks_db.main_publisher.find().count(),
+                        "available_books_num": available_books_num}
+                   })
 
 
 # CRUD
@@ -168,18 +224,20 @@ def delete(request, id_book):
 
 
 def check_delete_integrity(initial_book):
-    if connect_to_db().main_book.find({'author': initial_book.author}).count() == 0:
-        connect_to_db().main_author.remove({'name': initial_book.author})
-    if connect_to_db().main_book.find({'genre': initial_book.genre}).count() == 0:
-        connect_to_db().main_genre.remove({'name': initial_book.genre})
-    if connect_to_db().main_book.find({'publisher': initial_book.publisher}).count() == 0:
-        connect_to_db().main_publisher.remove({'name': initial_book.publisher})
+    mobooks_db = connect_to_db()
+    if mobooks_db.main_book.find({'author': initial_book.author}).count() == 0:
+        mobooks_db.main_author.remove({'name': initial_book.author})
+    if mobooks_db.main_book.find({'genre': initial_book.genre}).count() == 0:
+        mobooks_db.main_genre.remove({'name': initial_book.genre})
+    if mobooks_db.main_book.find({'publisher': initial_book.publisher}).count() == 0:
+        mobooks_db.main_publisher.remove({'name': initial_book.publisher})
 
 
 def check_create_integrity(initial_book):
-    if connect_to_db().main_author.find({'name': initial_book.author}).count() == 0:
+    mobooks_db = connect_to_db()
+    if mobooks_db.main_author.find({'name': initial_book.author}).count() == 0:
         Author.objects.create(name=initial_book.author)
-    if connect_to_db().main_genre.find({'name': initial_book.genre}).count() == 0:
+    if mobooks_db.main_genre.find({'name': initial_book.genre}).count() == 0:
         Genre.objects.create(name=initial_book.genre)
-    if connect_to_db().main_publisher.find({'name': initial_book.publisher}).count() == 0:
+    if mobooks_db.main_publisher.find({'name': initial_book.publisher}).count() == 0:
         Publisher.objects.create(name=initial_book.publisher)

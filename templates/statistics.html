@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+<table class="table">
+    <tr>
+        <th>Número de libros</th>
+        <th>Número de autores</th>
+        <th>Número de editoriales</th>
+        <th>Número de géneros</th>
+        <th>Número de ejemplares disponibles</th>
+    </tr>
+    <tr>
+        <td>{{statistics.books_num}}</td>
+        <td>{{statistics.authors_num}}</td>
+        <td>{{statistics.publishers_num}}</td>
+        <td>{{statistics.genres_num}}</td>
+        <td>{{statistics.available_books_num}}</td>
+    </tr>
+</table>
+{% endblock %}

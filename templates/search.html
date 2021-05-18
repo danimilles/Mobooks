@@ -14,9 +14,61 @@
     <div>
     <form method="POST">
         <div class="form-group">
-            {{ form }}
+            {{ form.non_field_errors }}
+            <div class="row">
+                <div class="fieldWrapper text-left">
+                    {{ form.page.errors }}
+                    <label class="form-label" for="{{ form.page.id_for_label }}">Página</label>
+                    {{ form.page }}
+                    {{ form.to_show.errors }}
+                    <label class="form-label" for="{{ form.to_show.id_for_label }}">Número de libros para mostrar</label>
+                    {{ form.to_show }}
+                    {{ form.order_type.errors }}
+                    <label class="form-label" for="{{ form.order_type.id_for_label }}">Ordenar por</label>
+                    {{ form.order_type }}
+                    {{ form.reverse.errors }}
+                    <label class="form-label" for="{{ form.reverse.id_for_label }}">Al revés</label>
+                    {{ form.reverse }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="fieldWrapper text-left">
+                    {{ form.title.errors }}
+                    <label class="form-label" for="{{ form.title.id_for_label }}">Título</label>
+                    {{ form.title }}
+                    {{ form.match.errors }}
+                    <label class="form-label" for="{{ form.match.id_for_label }}">Coincidir totalmente</label>
+                    {{ form.match }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="fieldWrapper text-left">
+                    {{ form.genre.errors }}
+                    <label class="form-label" for="{{ form.genre.id_for_label }}">Género</label>
+                    {{ form.genre }}
+                    {{ form.publisher.errors }}
+                    <label class="form-label" for="{{ form.publisher.id_for_label }}">Editorial</label>
+                    {{ form.publisher }}
+                    {{ form.author.errors }}
+                    <label class="form-label" for="{{ form.author.id_for_label }}">Autor</label>
+                    {{ form.author }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10">
+                    Año de publicación:
+                    {{ form.from_date.errors }}
+                    <label for="{{ form.from_date.id_for_label }}">Desde</label>
+                    {{ form.from_date }}
+                    {{ form.to_date.errors }}
+                    <label for="{{ form.to_date.id_for_label }}">Hasta</label>
+                    {{ form.to_date }}
+                </div>
+                <div class="col-2" style="text-align:right;">
+                    <button class="btn btn-primary " type="submit">Buscar</button>
+                </div>
+            </div>
             {% csrf_token %}
-            <button class="btn btn-primary" type="submit">Buscar</button>
         </div>
     </form>
     </div>
@@ -37,6 +89,11 @@
                         {% if book.publisher %}
                             <div class="col">
                                 Editorial: {{ book.publisher }}
+                            </div>
+                        {% endif %}
+                        {% if book.release_year %}
+                            <div class="col">
+                                Año de publicación: {{ book.release_year }}
                             </div>
                         {% endif %}
                     </div>

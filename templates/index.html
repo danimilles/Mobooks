@@ -7,7 +7,15 @@
     {% if user.is_authenticated %}
     <h2 style="text-align: center">¡Bienvenido/a al servicio de libros Mobooks!</h2>
     <br>
-    <div class="container text-center ">
+
+    <div class="container text-center" style="padding: 10px">
+        <a class="btn btn-primary" href="/book/search">Stock de libros</a>
+    </div>
+    <div class="container text-center" style="padding: 10px">
+        <a class="btn btn-primary" href="/statistics">Estadísticas</a>
+    </div>
+
+    <div class="container text-center" style="padding: 10px">
         <a class="btn btn-primary" href="/populate">Reiniciar base de datos con datos de pruebas</a>
     </div>
     {% else %}
