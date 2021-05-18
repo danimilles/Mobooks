@@ -71,12 +71,20 @@ WSGI_APPLICATION = 'Mobooks.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DB_HOST = 'localhost'
+DB_HOST = 'mongodb://mobooks:mobooks@mobook-shard-00-00.w6mzo.mongodb.net:27017,mobook-shard-00-01.w6mzo.mongodb.net:27017,mobook-shard-00-02.w6mzo.mongodb.net:27017/mobooks?ssl=true&replicaSet=atlas-joygt2-shard-0&authSource=admin&retryWrites=true&w=majority'
 
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'mobooks',
+        'CLIENT': {
+                'host': 'mongodb://mobooks:mobooks@mobook-shard-00-00.w6mzo.mongodb.net:27017,mobook-shard-00-01.w6mzo.mongodb.net:27017,mobook-shard-00-02.w6mzo.mongodb.net:27017/mobooks?ssl=true&replicaSet=atlas-joygt2-shard-0&authSource=admin&retryWrites=true&w=majority',
+                'port': 27017,
+                'username': 'mobooks',
+                'password': 'mobooks',
+                'authSource': 'mobooks',
+                'authMechanism': 'SCRAM-SHA-1'
+            }
     }
 }
 
