@@ -16,6 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from main import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
+    path('login/', views.login),
+    path('logout/', views.logout),
+    path('register/', views.register),
+    path('populate/', views.populate_database),
+    path('book/<int:id_book>/', views.details),
+    path('book/<int:id_book>/edit', views.edit),
+    path('book/<int:id_book>/delete', views.delete),
+    path('book/create/', views.create),
+    path('book/search/', views.search),
+    path('statistics/', views.statistics)
 ]
